@@ -4,6 +4,7 @@ import 'package:exercises/features/coupon/presenter/bloc/coupon_bloc.dart';
 import 'package:exercises/features/coupon/presenter/page/widgets/coupon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CouponPage extends StatelessWidget {
   const CouponPage({
@@ -40,7 +41,17 @@ class _Page extends StatelessWidget {
         title: const Text(
           'My Coupons',
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'Open shopping cart',
+            onPressed: () {
+              context.push('/cart');
+            },
+          ),
+        ],
       ),
+
       body: BlocListener<CouponBloc, CouponState>(
         listener: (context, state) {
         },
