@@ -2,25 +2,22 @@ import 'package:exercises/core/errors/exceptions.dart';
 import 'package:exercises/features/coupon/domain/entities/coupon.dart';
 
 abstract class CouponLocalDataSource {
-  
   Future<Coupon> registerCoupon(String coupon);
 
   Future<List<Coupon>> getCoupons();
 }
 
 class CouponLocalDataSourceImplementation extends CouponLocalDataSource {
-
   final List<Coupon> coupons = [
     const Coupon(name: 'CouponOne', discount: 100),
     const Coupon(name: 'CouponTwo', discount: 200),
     const Coupon(name: 'CouponThree', discount: 300),
   ];
 
-
   Coupon selectedCoupon = const Coupon(discount: 0, name: '');
 
   @override
-  Future<Coupon> registerCoupon(String coupon) async{
+  Future<Coupon> registerCoupon(String coupon) async {
     try {
       bool findCoupon = false;
 
@@ -31,12 +28,11 @@ class CouponLocalDataSourceImplementation extends CouponLocalDataSource {
         }
       }
 
-      if(!findCoupon){
+      if (!findCoupon) {
         throw const APIException(message: 'Coupon not exists', statusCode: 400);
       }
 
       return selectedCoupon;
-
     } on APIException {
       rethrow;
     } catch (e) {
@@ -54,6 +50,4 @@ class CouponLocalDataSourceImplementation extends CouponLocalDataSource {
       throw APIException(message: e.toString(), statusCode: 505);
     }
   }
-  
-
 }

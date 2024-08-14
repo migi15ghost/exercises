@@ -29,8 +29,13 @@ class CartLocalDataSourceImplementation extends CartLocalDataSource {
   @override
   Future<void> discountCoupon(Coupon coupon) async {
     try {
+      double auxTotal = 0;
+      for (var product in cart.products) {
+        auxTotal += product.price;
+      }
+      auxTotal -= coupon.discount;
       cart = Cart(
-        total: cart.total - coupon.discount,
+        total: auxTotal,
         products: [const Product(price: 1000.0)],
       );
     } on APIException {

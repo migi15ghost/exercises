@@ -23,6 +23,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       RegisterCouponEvent event, Emitter<CouponState> emit) async {
     emit(const ReadingCoupon());
     final result = await registerCoupon(event.code);
+    await Future.delayed(const Duration(seconds: 1));
 
     result.fold(
           (failure) => emit(CouponError(failure.errorMessage)),

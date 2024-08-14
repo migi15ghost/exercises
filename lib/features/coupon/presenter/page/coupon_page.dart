@@ -42,12 +42,36 @@ class _Page extends StatelessWidget {
           'My Coupons',
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
+          InkWell(
+            onTap: (){
               context.push('/cart');
             },
+            child: Stack(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.shopping_cart),
+                  tooltip: 'Open shopping cart',
+                  onPressed: () {
+                  },
+                ),
+                Container(
+                  width: 25,
+                  height: 25,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '1',
+                      style: 
+                      TextStyle(
+                        fontSize: 17,
+                        color: Colors.white),)
+                      ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

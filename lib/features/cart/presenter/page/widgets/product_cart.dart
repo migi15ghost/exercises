@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key,required this.price});
+  const ProductCard({super.key, required this.price});
 
   final double price;
 
@@ -11,9 +11,13 @@ class ProductCard extends StatelessWidget {
     final double height = MediaQuery.sizeOf(context).height;
     return Container(
       width: width,
-      height: height*0.2,
-      margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+      height: height * 0.2,
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       padding: const EdgeInsets.all(10),
+      constraints: const BoxConstraints(
+        minWidth: 700,
+        maxWidth: 700,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
@@ -30,8 +34,8 @@ class ProductCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            width: width*0.2,
-            height: height*0.2,
+            width: width * 0.2,
+            height: height * 0.2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.grey,
@@ -42,7 +46,8 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('$price',
+              Text(
+                '$price',
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
