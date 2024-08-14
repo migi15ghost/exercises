@@ -93,118 +93,124 @@ class _Body extends HookWidget {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         if (state is CartSuccess) {
-          return Container(
-            width: width,
-            constraints: const BoxConstraints(
-              minWidth: 700,
-              maxWidth: 700,
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: height * 0.8,
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: state.order.products.length,
-                        itemBuilder: (context, index) {
-                          return ProductCard(
-                            price: state.order.products[index].price,
-                          );
-                        }),
+          return Center(
+            child: Container(
+              width: width,
+              constraints: const BoxConstraints(
+                maxWidth: 700,
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: height * 0.8,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: state.order.products.length,
+                          itemBuilder: (context, index) {
+                            return ProductCard(
+                              price: state.order.products[index].price,
+                            );
+                          }),
+                    ),
                   ),
-                ),
-                Form(
-                  key: formKey,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: width * 0.5,
-                        height: 40,
-                        child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
-                            labelText: "Enter Coupon",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  topLeft: Radius.circular(10)),
-                              borderSide: BorderSide(),
-                            ),
-                          ),
-                          controller: codeText,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some coupon';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      BlocConsumer<CouponBloc, CouponState>(
-                          listener: (context, state) {
-                        if (state is CouponVerificated) {
-                          codeText.text = '';
-                          context
-                              .read<CartBloc>()
-                              .add(DiscountCouponEvent(state.coupon));
-                        }
-                      }, builder: (context, state) {
-                        return Container(
-                          width: width * 0.2,
+                  Form(
+                    key: formKey,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: width * 0.5,
                           height: 40,
                           constraints: const BoxConstraints(
-                            minWidth: 700,
-                            maxWidth: 700,
+                            maxWidth: 400,
                           ),
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10),
-                                topRight: Radius.circular(10)),
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              labelText: "Enter Coupon",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                borderSide: BorderSide(),
+                              ),
+                            ),
+                            controller: codeText,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some coupon';
+                              }
+                              return null;
+                            },
                           ),
-                          child: Center(
-                            child: state is ReadingCoupon
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : InkWell(
-                                    onTap: () {
-                                      if (formKey.currentState!.validate()) {
-                                        context.read<CouponBloc>().add(
-                                            RegisterCouponEvent(codeText.text));
-                                      }
-                                    },
-                                    child: const Text(
-                                      'apply',
-                                      style: TextStyle(
-                                        color: Colors.white,
+                        ),
+                        BlocConsumer<CouponBloc, CouponState>(
+                            listener: (context, state) {
+                          if (state is CouponVerificated) {
+                            codeText.text = '';
+                            context
+                                .read<CartBloc>()
+                                .add(DiscountCouponEvent(state.coupon));
+                          }
+                        }, builder: (context, state) {
+                          return Container(
+                            width: width * 0.2,
+                            height: 40,
+                            constraints: const BoxConstraints(
+                              maxWidth: 200,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                            ),
+                            child: Center(
+                              child: state is ReadingCoupon
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        if (formKey.currentState!.validate()) {
+                                          context.read<CouponBloc>().add(
+                                              RegisterCouponEvent(
+                                                  codeText.text));
+                                        }
+                                      },
+                                      child: const Text(
+                                        'apply',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                          ),
-                        );
-                      }),
-                    ],
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
                   ),
-                ),
-                BlocBuilder<CouponBloc, CouponState>(builder: (context, state) {
-                  if (state is CouponError) {
-                    return const Text('The coupon code entered is not valid.',
-                        style: TextStyle(color: Colors.red));
-                  }
-                  if (state is CouponVerificated) {
-                    return Text(
-                      'coupon #${state.coupon.name} applied.',
-                      style: const TextStyle(color: Colors.green),
-                    );
-                  }
+                  BlocBuilder<CouponBloc, CouponState>(
+                      builder: (context, state) {
+                    if (state is CouponError) {
+                      return const Text('The coupon code entered is not valid.',
+                          style: TextStyle(color: Colors.red));
+                    }
+                    if (state is CouponVerificated) {
+                      return Text(
+                        'coupon #${state.coupon.name} applied.',
+                        style: const TextStyle(color: Colors.green),
+                      );
+                    }
 
-                  return const Text('');
-                }),
-              ],
+                    return const Text('');
+                  }),
+                ],
+              ),
             ),
           );
         }
