@@ -147,9 +147,9 @@ class _Page extends HookWidget {
                     if(state is CouponError) {
                       return const Text('The coupon code entered is not valid.',style: TextStyle(color: Colors.red));
                     }
-                    /*if(state is CouponVerificated) {
+                    if(state is CouponVerificated) {
                       return Text('coupon #${state.coupon.name} applied.' ,style: const TextStyle(color: Colors.green),);
-                    }*/
+                    }
           
                     return const Text('');
                   }

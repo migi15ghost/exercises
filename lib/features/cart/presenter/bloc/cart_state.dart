@@ -38,5 +38,5 @@ class CartSuccess extends CartState{
   const CartSuccess(this.order);
   final Cart order;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [order.total];
 }
