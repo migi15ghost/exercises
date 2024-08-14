@@ -54,6 +54,10 @@ class _Page extends StatelessWidget {
 
       body: BlocListener<CouponBloc, CouponState>(
         listener: (context, state) {
+          if(state is CouponError){
+            
+
+          }
         },
         child: SafeArea(
           child: _Body(),

@@ -27,6 +27,13 @@ class CartError extends CartState{
   List<Object> get props => [message];
 }
 
+class CartUpdated extends CartState{
+  const CartUpdated();
+
+  @override
+  List<Object> get props => [];
+}
+
 class CartSuccess extends CartState{
   const CartSuccess(this.order);
   final Cart order;

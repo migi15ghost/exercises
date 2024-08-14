@@ -21,6 +21,13 @@ class CouponError extends CouponState{
   List<Object> get props => [message];
 }
 
+class ReadingCoupon extends CouponState{
+  const ReadingCoupon();
+
+  @override
+  List<Object> get props => [];
+}
+
 class GettingCoupons extends CouponState{
   const GettingCoupons();
 
@@ -37,3 +44,11 @@ class CouponLoaded extends CouponState{
   List<Object> get props => [];
 }
 
+class CouponVerificated extends CouponState{
+  const CouponVerificated(this.coupon);
+
+  final Coupon coupon;
+
+  @override
+  List<Object> get props => [];
+}

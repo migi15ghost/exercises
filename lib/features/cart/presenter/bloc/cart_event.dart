@@ -8,6 +8,13 @@ abstract class CartEvent  extends Equatable{
   List<Object> get props => [];
 }
 
+class DiscountCouponEvent extends CartEvent{
+  const DiscountCouponEvent(this.coupon);
+
+  final Coupon coupon;
+
+}
+
 class ReadCartEvent extends CartEvent{
   const ReadCartEvent();
 }

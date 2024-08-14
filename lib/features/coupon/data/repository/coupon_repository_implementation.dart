@@ -13,6 +13,16 @@ class CouponRepositoryImplementation
   final CouponLocalDataSource _localDataSource;
 
   @override
+  ResultFuture<Coupon> registerCoupon(String coupon) async {
+    try {
+      final result = await _localDataSource.registerCoupon(coupon);
+      return Right(result);
+    } on APIException catch (e) {
+      return Left(APIFailure.fromException(e));
+    }
+  }
+
+  @override
   ResultFuture<List<Coupon>> getCoupons() async {
     try {
       final result = await _localDataSource.getCoupons();

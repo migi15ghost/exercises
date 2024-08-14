@@ -20,6 +20,7 @@ dependencies:
   get_it: ^7.6.4
   dartz: ^0.10.1
   cupertino_icons: ^1.0.6
+  flutter_hooks: ^0.20.1
 
 dev_dependencies:
   flutter_test:
